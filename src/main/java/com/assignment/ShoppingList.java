@@ -7,6 +7,7 @@ public class ShoppingList {
 
     List Item;
 
+    String name;
     int id;
     private boolean isDone;
 
