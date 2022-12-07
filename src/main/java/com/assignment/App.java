@@ -35,9 +35,9 @@ public class App {
         }
     }
 
-    void login(String username, String password) {
+    static void login(String username, String password) {
         User user = database.getUser(username);
-        if (user != null || (!user.getUsername().equals(username) && !user.getPassword().equals(password))) {
+        if (user == null || (!user.getUsername().equals(username) && !user.getPassword().equals(password))) {
             System.out.println("Unauthorized user");
             return;
         }
@@ -51,35 +51,61 @@ public class App {
 
         open();
         System.out.println("-----------------------------------------------------------------------------");
+        // User oluşturma
+
         User user1 = new User("Mehmet__", "123456", "112233");
         User user2 = new User("Sinan26", "123456", "112233");
+
+        // ShoppingList oluştuma ve userla mergelama
 
         ShoppingList shoppingList1 = new ShoppingList("manav", new Date(), user1);
         ShoppingList shoppingList2 = new ShoppingList("Kasap", new Date(), user2);
 
+        // shoppingListlerin rutinlerini kontrol etme ve değiştirme
+        System.out.println("Liste rutin mi?: " + shoppingList2.getIsRoutine());
+
         shoppingList2.setIsRoutine(true);
+        System.out.println("Liste rutin mi?: " + shoppingList2.getIsRoutine());
+
+        checkRoutineList();
+
+        // dbye liste ekleme
 
         database.createList(shoppingList1);
         database.createList(shoppingList2);
+
+        // dbye user ekleme
 
         database.createUser(user1);
         database.createUser(user2);
 
         database.print();
 
-        System.out.println("User1 id:" + user1.getId());
-        System.out.println("User2 id:" + user2.getId());
+        System.out.println(database.getList());
 
-        System.out.println("Shoppinglist2 id:" + shoppingList1.getId());
-        System.out.println("Shoppinglist2 id:" + shoppingList2.getId());
+        // listelerin alışverişleri tamamlandı mı?
+        System.out.println("Lİste için alışveriş tamamlandı mı?: " + shoppingList2.isDone());
 
-        shoppingList2.isDone();
         shoppingList2.setDone(true);
-        shoppingList2.isDone();
 
+        System.out.println("Lİste için alışveriş tamamlandı mı?: " + shoppingList2.isDone());
+
+        System.out.println(shoppingList1.getDate());
         shoppingList1.setDate(new Date());
+        System.out.println(shoppingList1.getDate());
 
-        shoppingList1.getDate();
+        database.deleteList(shoppingList1.getId());
+        database.print();
+
+        // login
+        login("Sinan26", "112233");
+        login("Mehmet", "123456789");
+
+        System.out.println(shoppingList2.getId() + " idli " + "listenin ismi: " + shoppingList2.getName());
+
+        shoppingList2.setName("başka manav");
+
+        System.out.println(shoppingList2.getId() + " idli " + "listenin ismi: " + shoppingList2.getName());
 
     }
 }
