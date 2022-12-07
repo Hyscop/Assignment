@@ -1,19 +1,37 @@
 package com.assignment;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class ShoppingList {
-
-    List Item;
-
-    String name;
-    int id;
+    private int id;
+    private String name;
     private boolean isDone;
-
     private boolean isRoutine;
-
     private Date date;
+    List itemList;
+
+    ShoppingList(String name, Date date){
+        this.id = IdGenerator.generate();
+        this.name = name;
+        this.date = date;
+        itemList = new ArrayList<Item>();
+        this.isDone = false;
+        this.isRoutine = false;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public boolean getIsRoutine() {
         return isRoutine;
