@@ -12,6 +12,14 @@ public class Database {
         userList = new ArrayList<User>();
     }
 
+    List getList() { 
+        return this.shoppingLists;
+     }
+
+     List getUsers() {
+        return this.userList;
+     }
+
     List createList(Object list) {
         if(!this.typeCheck(ShoppingList.class, list)) return null;
         shoppingLists.add(list);
@@ -24,7 +32,7 @@ public class Database {
         ShoppingList current = null;
         for(int i = 0; i<this.shoppingLists.size(); i++) {
             current = (ShoppingList) this.shoppingLists.get(i);
-            if(current.id == id) {
+            if(current.getId() == id) {
                 current = (ShoppingList) list;
                 break;
             }
@@ -34,12 +42,10 @@ public class Database {
     }
 
     List deleteList(int id) {
-        boolean result = false;
         for(int i = 0; i<this.shoppingLists.size(); i++) {
             ShoppingList current = (ShoppingList) this.shoppingLists.get(i);
-            if(current.id == id) {
+            if(current.getId() == id) {
                 this.shoppingLists.remove(i);
-                result = true;
                 break;
             }
         }
@@ -56,7 +62,7 @@ public class Database {
         User user = null;
         for(int i = 0; i<this.shoppingLists.size(); i++) {
             User current = (User) this.userList.get(i);
-            if(current.username == username) {
+            if(current.getUsername() == username) {
                 user = (User) this.userList.get(i);
                 break;
             }
@@ -68,7 +74,7 @@ public class Database {
         User user = null;
         for(int i = 0; i<this.shoppingLists.size(); i++) {
             User current = (User) this.userList.get(i);
-            if(current.id == id) {
+            if(current.getId() == id) {
                 user = (User) this.userList.get(i);
                 break;
             }
@@ -83,14 +89,14 @@ public class Database {
         System.out.print("[ ");
         for(int i = 0; i<this.shoppingLists.size(); i++) {
             ShoppingList current = (ShoppingList) this.shoppingLists.get(i);
-            System.out.print(" { id: "+ current.id + ", name: " + current.name+ " }\n");
+            System.out.print(" { id: "+ current.getId() + ", name: " + current.getName() + " }\n");
         }
         System.out.print(" ]");
         System.out.println("User List:");
         System.out.print("[ ");
         for(int i = 0; i<this.userList.size(); i++) {
             User current = (User) this.userList.get(i);
-            System.out.print(" { id: "+ current.id + ", name: " + current.username+ " }\n");
+            System.out.print(" { id: "+ current.getId() + ", name: " + current.getUsername() + " }\n");
         }
         System.out.print(" ]");
     }
