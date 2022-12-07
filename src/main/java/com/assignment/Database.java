@@ -20,9 +20,9 @@ public class Database {
         return this.userList;
     }
 
-    List createList(Object list) {
-        if (!this.typeCheck(ShoppingList.class, list))
-            return null;
+    List createList(ShoppingList list) {
+        // if (!this.typeCheck(ShoppingList.class, list))
+        // return null;
         shoppingLists.add(list);
         return this.shoppingLists;
     }
@@ -55,15 +55,15 @@ public class Database {
     }
 
     List createUser(User user) {
-        if (!this.typeCheck(User.class, user))
-            return null;
+        // if (!this.typeCheck(User.class, user))
+        // return null;
         this.userList.add(user);
         return this.userList;
     }
 
     User getUser(String username) {
         User user = null;
-        for (int i = 0; i < this.shoppingLists.size(); i++) {
+        for (int i = 0; i < this.userList.size(); i++) {
             User current = (User) this.userList.get(i);
             if (current.getUsername() == username) {
                 user = (User) this.userList.get(i);
@@ -88,19 +88,19 @@ public class Database {
     void print() {
         System.out.println("Printing database...");
         System.out.println("Shopping Lists:");
-        System.out.print("[ ");
+        System.out.print("[");
         for (int i = 0; i < this.shoppingLists.size(); i++) {
             ShoppingList current = (ShoppingList) this.shoppingLists.get(i);
             System.out.print(" { id: " + current.getId() + ", name: " + current.getName() + " }\n");
         }
-        System.out.print(" ]");
+        System.out.print("]\n");
         System.out.println("User List:");
-        System.out.print("[ ");
+        System.out.print("[");
         for (int i = 0; i < this.userList.size(); i++) {
             User current = (User) this.userList.get(i);
             System.out.print(" { id: " + current.getId() + ", name: " + current.getUsername() + " }\n");
         }
-        System.out.print(" ]");
+        System.out.print("]\n");
     }
 
     private boolean typeCheck(Object type, Object item) {
