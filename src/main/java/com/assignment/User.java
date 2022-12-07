@@ -8,6 +8,7 @@ public class User {
     private String username;
     private String phoneNumber;
     private String password;
+
     List shoppingList;
 
     User(String username, String phoneNumber, String password) {
@@ -16,22 +17,23 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.shoppingList = new ArrayList<ShoppingList>();
+
     }
 
     public int getId() {
         return id;
     }
-    
+
     public String getUsername() {
         return username;
     }
-    
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
-    
+
     public String getPassword() {
         return password;
     }
-    
+
 }

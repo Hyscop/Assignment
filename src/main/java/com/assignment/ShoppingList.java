@@ -11,14 +11,17 @@ public class ShoppingList {
     private boolean isRoutine;
     private Date date;
     List itemList;
+    User user;
 
-    ShoppingList(String name, Date date){
+    ShoppingList(String name, Date date, User user) {
         this.id = IdGenerator.generate();
         this.name = name;
         this.date = date;
         itemList = new ArrayList<Item>();
         this.isDone = false;
         this.isRoutine = false;
+        this.user = user;
+        user.shoppingList.add(this);
     }
 
     public int getId() {
