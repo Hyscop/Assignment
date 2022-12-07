@@ -5,6 +5,9 @@ public class Item {
     private String name;
     private int quantity;
 
+    Item() {
+    }
+
     Item(String name, int quantity) {
         this.name = name;
         this.quantity = quantity;

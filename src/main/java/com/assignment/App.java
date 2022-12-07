@@ -107,5 +107,11 @@ public class App {
 
         System.out.println(shoppingList2.getId() + " idli " + "listenin ismi: " + shoppingList2.getName());
 
+        Item item1 = new Item("Elma", 3);
+        Item item2 = new Item("ayva", 2);
+
+        System.out.println("current item count in: list1: " + shoppingList1.addItem(item1).size());
+        System.out.println("Current Item count in: List1: " + shoppingList1.addItem(item2).size());
+
     }
 }
