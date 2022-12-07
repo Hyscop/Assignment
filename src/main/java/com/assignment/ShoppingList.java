@@ -24,6 +24,26 @@ public class ShoppingList {
         user.shoppingList.add(this);
     }
 
+
+    List addItem(Item item) {
+        this.itemList.add(item);
+        return this.itemList;
+    }
+
+    List deleteItem(Item item){
+        this.itemList.remove(item);
+        item = null;
+        return this.itemList;
+    }
+
+    void changeItemQuantity(Item item, int quantity) {
+        if(quantity > 0) {
+            item.setQuantity(quantity);
+        } else {
+            this.deleteItem(item);
+        }
+    }
+
     public int getId() {
         return this.id;
     }

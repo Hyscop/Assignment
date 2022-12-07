@@ -27,22 +27,6 @@ public class Database {
         return this.shoppingLists;
     }
 
-    ShoppingList updateList(int id, Object list) {
-        if (!this.typeCheck(ShoppingList.class, list))
-            return null;
-
-        ShoppingList current = null;
-        for (int i = 0; i < this.shoppingLists.size(); i++) {
-            current = (ShoppingList) this.shoppingLists.get(i);
-            if (current.getId() == id) {
-                current = (ShoppingList) list;
-                break;
-            }
-        }
-        return current;
-
-    }
-
     List deleteList(int id) {
         for (int i = 0; i < this.shoppingLists.size(); i++) {
             ShoppingList current = (ShoppingList) this.shoppingLists.get(i);
