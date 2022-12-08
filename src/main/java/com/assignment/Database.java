@@ -21,10 +21,12 @@ public class Database {
     }
 
     List createList(ShoppingList list) {
-        // if (!this.typeCheck(ShoppingList.class, list))
-        // return null;
         shoppingLists.add(list);
         return this.shoppingLists;
+    }
+
+    boolean deleteList(ShoppingList item) {
+        return this.shoppingLists.remove(item);
     }
 
     List deleteList(int id) {
@@ -39,8 +41,6 @@ public class Database {
     }
 
     List createUser(User user) {
-        // if (!this.typeCheck(User.class, user))
-        // return null;
         this.userList.add(user);
         return this.userList;
     }
@@ -87,8 +87,4 @@ public class Database {
         System.out.print("]\n");
     }
 
-    private boolean typeCheck(Object type, Object item) {
-        return item.getClass().getName() == type.getClass().getName();
-
-    }
 }

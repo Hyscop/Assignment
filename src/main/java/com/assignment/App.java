@@ -36,6 +36,7 @@ public class App {
     }
 
     static void login(String username, String password) {
+        System.out.println("Trying to log in with username:" + username);
         User user = database.getUser(username);
         if (user == null || (!user.getUsername().equals(username) && !user.getPassword().equals(password))) {
             System.out.println("Unauthorized user");
@@ -51,67 +52,80 @@ public class App {
 
         open();
         System.out.println("-----------------------------------------------------------------------------");
-        // User oluşturma
-
+        
+        // Create user
         User user1 = new User("Mehmet__", "123456", "112233");
         User user2 = new User("Sinan26", "123456", "112233");
 
-        // ShoppingList oluştuma ve userla mergelama
-
-        ShoppingList shoppingList1 = new ShoppingList("manav", new Date(), user1);
-        ShoppingList shoppingList2 = new ShoppingList("Kasap", new Date(), user2);
-
-        // shoppingListlerin rutinlerini kontrol etme ve değiştirme
-        System.out.println("Liste rutin mi?: " + shoppingList2.getIsRoutine());
-
-        shoppingList2.setIsRoutine(true);
-        System.out.println("Liste rutin mi?: " + shoppingList2.getIsRoutine());
-
-        checkRoutineList();
-
-        // dbye liste ekleme
-
-        database.createList(shoppingList1);
-        database.createList(shoppingList2);
-
-        // dbye user ekleme
-
+        // Add User into database
         database.createUser(user1);
         database.createUser(user2);
 
-        database.print();
-
-        System.out.println(database.getList());
-
-        // listelerin alışverişleri tamamlandı mı?
-        System.out.println("Lİste için alışveriş tamamlandı mı?: " + shoppingList2.isDone());
-
-        shoppingList2.setDone(true);
-
-        System.out.println("Lİste için alışveriş tamamlandı mı?: " + shoppingList2.isDone());
-
-        System.out.println(shoppingList1.getDate());
-        shoppingList1.setDate(new Date());
-        System.out.println(shoppingList1.getDate());
-
-        database.deleteList(shoppingList1.getId());
-        database.print();
+        // Create ShoppingList and connect with User
+        ShoppingList shoppingList1 = new ShoppingList("manav", new Date(), user1);
+        ShoppingList shoppingList2 = new ShoppingList("Kasap", new Date(), user2);
 
         // login
         login("Sinan26", "112233");
         login("Mehmet", "123456789");
 
-        System.out.println(shoppingList2.getId() + " idli " + "listenin ismi: " + shoppingList2.getName());
+        // Add Lists into database
+        database.createList(shoppingList1);
+        database.createList(shoppingList2);
 
-        shoppingList2.setName("başka manav");
+        // Check and update if the ShoppingList is Routine
+        System.out.println("Liste rutin mi?: " + shoppingList2.getIsRoutine());
+        shoppingList2.setIsRoutine(true);
+        System.out.println("Liste rutin mi?: " + shoppingList2.getIsRoutine());
 
-        System.out.println(shoppingList2.getId() + " idli " + "listenin ismi: " + shoppingList2.getName());
 
+        // Check the database for all ShoppingList to fetch RoutineLists
+        checkRoutineList();
+
+        //Print the database, User and ShoppingList
+        database.print();
+
+        // System.out.println(database.getList());
+
+        // Change List Properties
+        System.out.println("List Name: " + shoppingList2.getName() + " Is done:" + shoppingList2.isDone());
+        shoppingList2.setDone(true);
+        shoppingList2.setName("Another Name List");
+        System.out.println("List Name: " + shoppingList2.getName() + " Is done:" + shoppingList2.isDone());
+
+        System.out.println(shoppingList1.getDate());
+        shoppingList1.setDate(new Date());
+        System.out.println(shoppingList1.getDate());
+
+
+        // Delete List
+        database.deleteList(shoppingList1.getId());
+        database.print();
+
+        // Adding Items to the List
         Item item1 = new Item("Elma", 3);
         Item item2 = new Item("ayva", 2);
 
-        System.out.println("current item count in: list1: " + shoppingList1.addItem(item1).size());
-        System.out.println("Current Item count in: List1: " + shoppingList1.addItem(item2).size());
+        shoppingList1.addItem(item1);
+        shoppingList1.addItem(item2);
+        shoppingList1.print();
+        
+        //Changing quantity of an Item
+        System.out.println("[FUNCTION] Change quantity to 55 " + item2.getName());
+        shoppingList1.changeItemQuantity(item1, 55);
+        shoppingList1.print();
+
+        //Deleting Item
+        System.out.println("[FUNCTION] Delete item " + item2.getName());
+        shoppingList1.deleteItem(item1);
+        shoppingList1.print();
+
+        //Changing quantity to 0 of an Item
+        System.out.println("[FUNCTION] Change quantity to 0 " + item2.getName());
+        shoppingList1.changeItemQuantity(item2, 0);
+        shoppingList1.print();
+
+
 
     }
 }

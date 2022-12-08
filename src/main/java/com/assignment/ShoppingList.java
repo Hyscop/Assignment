@@ -80,4 +80,13 @@ public class ShoppingList {
         this.isDone = isDone;
     }
 
+
+    void print(){
+        System.out.println("LIST NAME: " + this.getName() );
+        if(itemList.size() == 0 ) System.out.println("  There is no items in this list.");
+        for(int i = 0; i<itemList.size(); i++) {
+            Item item = (Item) this.itemList.get(i);
+            System.out.println("    Item Name: "+ item.getName() + " Quantity: " + item.getQuantity());
+        }
+    }
 }
