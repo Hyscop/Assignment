@@ -7,6 +7,7 @@ import java.util.List;
 public class App {
 
     static Database database;
+    static String parser = "--------------------------------------";
 
     static void open() {
         System.out.println("Welcome to GROL App!");
@@ -20,7 +21,7 @@ public class App {
         List list = database.getList();
 
         Calendar today = Calendar.getInstance();
-
+        System.out.println("Checking database to find routine lists...");
         for (int i = 0; i < list.size(); i++) {
             ShoppingList item = (ShoppingList) list.get(i);
             Calendar itemDate = Calendar.getInstance();
@@ -29,7 +30,7 @@ public class App {
             if (item.getIsRoutine() && today.get(Calendar.YEAR) == itemDate.get(Calendar.YEAR)
                     && today.get(Calendar.MONTH) == itemDate.get(Calendar.MONTH)
                     && today.get(Calendar.DAY_OF_MONTH) == itemDate.get(Calendar.DAY_OF_MONTH)) {
-                System.out.println("Name: " + item.getName() + " is a routine list and it's time for shopping.");
+                System.out.println("    Name: " + item.getName() + " is a routine list and it's time for shopping.");
 
             }
         }
@@ -50,82 +51,80 @@ public class App {
     public static void main(String[] args) {
         App.database = new Database();
 
-        open();
-        System.out.println("-----------------------------------------------------------------------------");
-        
-        // Create user
         User user1 = new User("Mehmet__", "123456", "112233");
         User user2 = new User("Sinan26", "123456", "112233");
-
-        // Add User into database
         database.createUser(user1);
         database.createUser(user2);
 
-        // Create ShoppingList and connect with User
-        ShoppingList shoppingList1 = new ShoppingList("manav", new Date(), user1);
-        ShoppingList shoppingList2 = new ShoppingList("Kasap", new Date(), user2);
-
-        // login
-        login("Sinan26", "112233");
-        login("Mehmet", "123456789");
-
-        // Add Lists into database
+        // Use case 1:
+        System.out.println(parser);
+        System.out.println("[USE CASE] Scenario 1 \n");
+        open();
+        login("Mehmet__", "112233");
+        ShoppingList shoppingList1 = new ShoppingList("gr0cery", new Date(), user1);
         database.createList(shoppingList1);
-        database.createList(shoppingList2);
 
-        // Check and update if the ShoppingList is Routine
-        System.out.println("Liste rutin mi?: " + shoppingList2.getIsRoutine());
-        shoppingList2.setIsRoutine(true);
-        System.out.println("Liste rutin mi?: " + shoppingList2.getIsRoutine());
-
-
-        // Check the database for all ShoppingList to fetch RoutineLists
-        checkRoutineList();
-
-        //Print the database, User and ShoppingList
-        database.print();
-
-        // System.out.println(database.getList());
-
-        // Change List Properties
-        System.out.println("List Name: " + shoppingList2.getName() + " Is done:" + shoppingList2.isDone());
-        shoppingList2.setDone(true);
-        shoppingList2.setName("Another Name List");
-        System.out.println("List Name: " + shoppingList2.getName() + " Is done:" + shoppingList2.isDone());
-
-        System.out.println(shoppingList1.getDate());
-        shoppingList1.setDate(new Date());
-        System.out.println(shoppingList1.getDate());
-
-
-        // Delete List
-        database.deleteList(shoppingList1.getId());
-        database.print();
-
-        // Adding Items to the List
-        Item item1 = new Item("Elma", 3);
-        Item item2 = new Item("ayva", 2);
-
+        Item item1 = new Item("Apple", 3);
+        System.out.println("[OUTPUT] Added item "+ item1.getName() +" to the list " + shoppingList1.getName());
+        Item item2 = new Item("Melon", 2);
+        System.out.println("[OUTPUT] Added item "+ item2.getName() +" to the list " + shoppingList1.getName());
         shoppingList1.addItem(item1);
         shoppingList1.addItem(item2);
         shoppingList1.print();
-        
-        //Changing quantity of an Item
-        System.out.println("[FUNCTION] Change quantity to 55 " + item2.getName());
-        shoppingList1.changeItemQuantity(item1, 55);
-        shoppingList1.print();
 
-        //Deleting Item
-        System.out.println("[FUNCTION] Delete item " + item2.getName());
-        shoppingList1.deleteItem(item1);
-        shoppingList1.print();
+        System.out.println("[OUTPUT] List Name: " + shoppingList1.getName() + " Is routine? " + shoppingList1.getIsRoutine() + " Is Done: " + shoppingList1.isDone());
+        shoppingList1.setDate(new Date());
+        shoppingList1.setIsRoutine(true);
+        shoppingList1.setName("Grocery");
+        shoppingList1.setDone(true);
+        System.out.println("[OUTPUT] List is Updated: " + shoppingList1.getName() + " Is routine? " + shoppingList1.getIsRoutine() + " Is Done: " + shoppingList1.isDone());
+        close();
 
-        //Changing quantity to 0 of an Item
-        System.out.println("[FUNCTION] Change quantity to 0 " + item2.getName());
-        shoppingList1.changeItemQuantity(item2, 0);
-        shoppingList1.print();
+        ShoppingList shoppingList2 = new ShoppingList("Health", new Date(), user2);
+        database.createList(shoppingList2);
+        Item item3 = new Item("Medicine", 2);
+        Item item4 = new Item("Medicine2", 2);
+        shoppingList2.addItem(item3);
+        shoppingList2.addItem(item4);
+
+        // Use case 2:
+        System.out.println(parser);
+        System.out.println("[USE CASE] Scenario 2 \n");
+        open();
+        login("Sinan26", "112233");
+        shoppingList2.print();
+        shoppingList2.changeItemQuantity(item3, 20);
+        System.out.println("[OUTPUT] Changed item quantity of " + item3.getName());
+        shoppingList2.changeItemQuantity(item4, 5);
+        System.out.println("[OUTPUT] Changed item quantity of " + item4.getName());
+        shoppingList2.print();
+        close();
+
+        // Alternate Path
+        System.out.println(parser);
+        System.out.println("[USE CASE] Scenario 2.1: Alternate \n");
+        shoppingList2.print();
+        shoppingList2.changeItemQuantity(item3, 0);
+        System.out.println("[OUTPUT] Changed item quantity of " + item3.getName());
+        shoppingList2.changeItemQuantity(item4, 0);
+        System.out.println("[OUTPUT] Changed item quantity of " + item4.getName());
+        shoppingList2.print();
+        close();
+
+
+        // Use case 3
+        System.out.println(parser);
+        System.out.println("[USE CASE] Scenario 3 \n");
+        checkRoutineList();
+        open();
+        login("Mehmet__", "112233");
+        shoppingList1.setDone(true);
+        System.out.println("[OUTPUT] Changed isDone of " + shoppingList1.getName() + " to " + shoppingList1.isDone() );
+        close();
+        System.out.println(parser);
 
 
 
+        database.print();
     }
 }

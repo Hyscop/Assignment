@@ -72,17 +72,17 @@ public class Database {
     void print() {
         System.out.println("Printing database...");
         System.out.println("Shopping Lists:");
-        System.out.print("[");
+        System.out.println("[");
         for (int i = 0; i < this.shoppingLists.size(); i++) {
             ShoppingList current = (ShoppingList) this.shoppingLists.get(i);
-            System.out.print(" { id: " + current.getId() + ", name: " + current.getName() + " }\n");
+            System.out.println(" { id: " + current.getId() + ", name: " + current.getName() + ", belongs: " +  current.user.getUsername()+" }\n");
         }
-        System.out.print("]\n");
+        System.out.println("]\n");
         System.out.println("User List:");
-        System.out.print("[");
+        System.out.println("[");
         for (int i = 0; i < this.userList.size(); i++) {
             User current = (User) this.userList.get(i);
-            System.out.print(" { id: " + current.getId() + ", name: " + current.getUsername() + " }\n");
+            System.out.println(" { id: " + current.getId() + ", username: " + current.getUsername() + " }\n");
         }
         System.out.print("]\n");
     }
